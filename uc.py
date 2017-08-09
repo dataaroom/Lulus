@@ -126,7 +126,7 @@ class Units:
         else: 
             in_factor = 1.0
             out_factor = 1.0
-            catg = getattr(Units,type).item()
+            catg = getattr(Units,type).item()  #  TODO: 调取用户所选的单位参数表，搜索输入和输出，并进行计算。返回计算结果。 
             for i,j in catg:
                 if inputUnit == i:
                     in_factor = j[0]
@@ -136,6 +136,7 @@ class Units:
             return result
   
 #　温度单位不成线性比例，公式计算不同，单独设置函数计算。
+# TODO: 以后有时间思考是否可以合并成一个函数。
     def convert_t(inputUnit, outputUnit, value):    
 
         output = value
