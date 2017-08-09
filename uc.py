@@ -7,6 +7,10 @@ build a class "Units" to convert unit as required.
 
 class Units:
 
+    
+    def __dir__(self):
+        return ['L', 'M', 'A','V','P','W','Q','v','p','density','t','T']
+
 # length
     L = {'m': [1.0, 1],
      'km': [1e-3, 1],
