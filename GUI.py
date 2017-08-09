@@ -17,7 +17,10 @@ calc = Units()
 unitList = list(calc.L.keys())
 
 def doNoting():
-    print('ok ok i won...')
+    out = entry_1.get()
+    print(out)
+    entry_2.insert(0,out)
+
 
 
 def length():
@@ -65,10 +68,11 @@ printButt.pack(side=LEFT, padx=2, pady=2)
 
 toolbar.pack(side=TOP, fill=X)
 
-# ***********   images and icons *****
+# ***********   Category selection**** *****
+# TODO: command has not been set up.
 frame_2 = Frame(root)
 v = IntVar()
-v.set(1)  # initializing the choice, i.e. Python
+v.set(1)  # initializing the choice, Defult choice is 'Lengh'
 selectbar_1 = Radiobutton(frame_2, text = 'Lengh', variable=v,value = 1, command = length).grid(row = 0, column = 0, sticky = W)
 selectbar_2 = Radiobutton(frame_2, text = 'Area', variable=v,value = 2, command = area).grid(row = 0, column = 1, sticky = W)
 selectbar_3 = Radiobutton(frame_2, text = 'Volumn', variable=v,value = 3, command = doNoting).grid(row = 0, column = 2, sticky = W)
@@ -91,7 +95,7 @@ frame_entry = Frame(root)
 
 
 variable_1 = StringVar(frame_entry)
-variable_1.set(unitList[1]) # default value
+variable_1.set(unitList[1]) # default value is Lengh Units
 variable_2 = StringVar(frame_entry)
 variable_2.set(unitList[2]) # default value
 
@@ -99,10 +103,10 @@ unit_1 = OptionMenu(frame_entry, variable_1, *unitList)   #   use "*"  + list
 unit_2 = OptionMenu(frame_entry, variable_2, *unitList)
 
 label_1 = Label(frame_entry, text='Input')
-button = Button(frame_entry, text='Convert', command = run)
+button = Button(frame_entry, text='Convert', command = doNoting)
 label_2 = Label(frame_entry, text='Result')
 
-entry_1 = Entry(frame_entry)
+entry_1 = Entry(frame_entry, text = 'dd')
 entry_2 = Entry(frame_entry)
 
 unit_1.grid(row = 1, column = 3)
