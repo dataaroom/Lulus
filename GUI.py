@@ -14,30 +14,24 @@ from uc import Units
 
 
 calc = Units()
-unitList = list(calc.L.keys())
+unit_type = 'L'
 
-def doNoting():
-    out = entry_1.get()
+def run():  # TODO: 程序运行主函数，　调用单位转换函数。在窗口输出计算值。
+    out = Units(unit_type, entry_1.get(),variable_1.get(), variable_2.get())
     print(out)
+    entry_2.delete(0,end)
     entry_2.insert(0,out)
 
 
 
 def length():
-    unitList = list(calc.L.keys())
+    unitList = 'L'
  #   result = calc.convert(type, unit1, unit2, value)
 
 
 def area():
     unitList = list(calc.A.keys())
  #   result = calc.convert(type, unit1, unit2, value)
-
-def run():
-    if entry_1.get().isnumeric():
-        result = convert_temperature(float(entry_1.get()), variable_1.get(), variable_2.get())
-        print(result)
-    else:
-        tkinter.messagebox.showinfo('error!', 'Invalid entry. \n\nIt has to be a number.')
 
 
 # *****   main GUI   ********************************************************************************
@@ -103,7 +97,7 @@ unit_1 = OptionMenu(frame_entry, variable_1, *unitList)   #   use "*"  + list
 unit_2 = OptionMenu(frame_entry, variable_2, *unitList)
 
 label_1 = Label(frame_entry, text='Input')
-button = Button(frame_entry, text='Convert', command = doNoting)
+button = Button(frame_entry, text='Convert', command = run)
 label_2 = Label(frame_entry, text='Result')
 
 entry_1 = Entry(frame_entry, text = 'dd')
