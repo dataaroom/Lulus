@@ -8,7 +8,7 @@ build a class "Units" to convert unit as required.
 class Units:
 
     
-    def __dir__(self):
+    def __dir__(self):　　　# 单位主列表, 在单位转换时使用。
         return ['L', 'M', 'A','V','P','W','Q','v','p','density','t','T']
 
 # length
@@ -118,99 +118,25 @@ class Units:
      'K': [1.0, 1, 'kelvin degree']
      }
 
-
+# 单位换算主函数，根据输入的单位，数值　计算要求单位下的值。返回值是浮点数。
     def convert(self, type, inputUnit, output, value):
-      in_factor = 1.0
-      out_factor = 1.0
-      if type == 'L':
-        for i, j in Units.L.items():
-            if inputUnit == i:
-                in_factor = j[0]
-            if output == i:
-                out_factor = j[0]
-        result = value * out_factor / in_factor
-        return result
-      elif type == 'A':
-        for i, j in Units.A.items():
-            if inputUnit == i:
-                in_factor = j[0]
-            if output == i:
-                out_factor = j[0]
-        result = value * out_factor / in_factor
-        return result
-      elif type == 'W':
-        for i, j in Units.W.items():
-            if inputUnit == i:
-                in_factor = j[0]
-            if output == i:
-                out_factor = j[0]
-        result = value * out_factor / in_factor
-        return result
-      elif type == 'M':
-        for i, j in Units.M.items():
-            if inputUnit == i:
-                in_factor = j[0]
-            if output == i:
-                out_factor = j[0]
-        result = value * out_factor / in_factor
-        return result
-      elif type == 'Q':
-        for i, j in Units.Q.items():
-            if inputUnit == i:
-                in_factor = j[0]
-            if output == i:
-                out_factor = j[0]
-        result = value * out_factor / in_factor
-        return result
-      elif type == 'v':
-        for i, j in Units.v.items():
-            if inputUnit == i:
-                in_factor = j[0]
-            if output == i:
-                out_factor = j[0]
-        result = value * out_factor / in_factor
-        return result
-      elif type == 'p':
-        for i, j in Units.p.items():
-            if inputUnit == i:
-                in_factor = j[0]
-            if output == i:
-                out_factor = j[0]
-        result = value * out_factor / in_factor
-        return result
-      elif type == 'P':
-        for i, j in Units.P.items():
-            if inputUnit == i:
-                in_factor = j[0]
-            if output == i:
-                out_factor = j[0]
-        result = value * out_factor / in_factor
-        return result
-      elif type == 'T':
-
-          result = Units.convert_t(inputUnit,output, value)
-          return result
-      elif type == 'density':
-        for i, j in Units.density.items():
-            if inputUnit == i:
-                in_factor = j[0]
-            if output == i:
-                out_factor = j[0]
-        result = value * out_factor / in_factor
-        return result
-      elif type == 'V':
-        for i, j in Units.V.items():
-            if inputUnit == i:
-                in_factor = j[0]
-            if output == i:
-                out_factor = j[0]
-        result = value * out_factor / in_factor
-        return result
-      else:
-        return None
-
-
-    def convert_t(inputUnit, outputUnit, value):
+        if type == 'T':
+            result = Units.convert_t(inputUnit,output, value)    # TODO: try 是不是 Units： 可以删掉。
+            return result
+        else: 
+            in_factor = 1.0
+            out_factor = 1.0
+            catg = getattr(Units,type).item()
+            for i,j in catg:
+                if inputUnit == i:
+                    in_factor = j[0]
+                if output == i:
+                    out_factor = j[0]
+            result = value * out_factor / in_factor    
+            return result
+  
+#　温度单位不成线性比例，公式计算不同，单独设置函数计算。
+    def convert_t(inputUnit, outputUnit, value):    
 
         output = value
         if inputUnit == '°F' and outputUnit == '°C':
