@@ -14,29 +14,43 @@ from uc import Units
 
 
 calc = Units()
-unit_type = 'L'
+UNIT_TYPE = 'L'
+unitList = list(getattr(calc,UNIT_TYPE).keys())
+
+def doNoting():
+    out = entry_1.get()
+    print(out)
+    entry_2.delete(0,END)
+    entry_2.insert(0,out)
+
 
 def run():  # TODO: 程序运行主函数，　调用单位转换函数。在窗口输出计算值。
-    out = Units(unit_type, entry_1.get(),variable_1.get(), variable_2.get())
+    out = Units.convert(UNIT_TYPE, entry_1.get(),variable_1.get(), variable_2.get())
     print(out)
-    entry_2.delete(0,end)
+    entry_2.delete(0,END)
     entry_2.insert(0,out)
 
 
 
 def length():
-    unitList = 'L'
+    UNIT_TYPE = 'L'
  #   result = calc.convert(type, unit1, unit2, value)
 
 
 def area():
-    unitList = list(calc.A.keys())
+    UNIT_TYPE = 'A'
+    variable_1 = StringVar(frame_entry)
+    variable_1.set(unitList[1])  # default value is Lengh Units
+    variable_2 = StringVar(frame_entry)
+    variable_2.set(unitList[2])  # default value
  #   result = calc.convert(type, unit1, unit2, value)
 
+def density():
+    UNIT_TYPE = 'density'
 
 # *****   main GUI   ********************************************************************************
 root = Tk()
-root.title('Engineering Units Converter 0.0.1')
+root.title('Lulus Process Engineer Aux. 0.0.1')
 
 # ******* The Main menu ********
 menu = Menu(root)
@@ -72,7 +86,7 @@ selectbar_2 = Radiobutton(frame_2, text = 'Area', variable=v,value = 2, command 
 selectbar_3 = Radiobutton(frame_2, text = 'Volumn', variable=v,value = 3, command = doNoting).grid(row = 0, column = 2, sticky = W)
 selectbar_4 = Radiobutton(frame_2, text = 'Pressure', variable=v,value = 4, command = doNoting).grid(row = 0, column = 3, sticky = W)
 selectbar_5 = Radiobutton(frame_2, text = 'Temeprature', variable=v,value = 5, command = doNoting).grid(row = 0, column = 4, sticky = W)
-selectbar_6 = Radiobutton(frame_2, text = 'Density', variable=v,value = 6, command = doNoting).grid(row = 0, column = 5, sticky = W)
+selectbar_6 = Radiobutton(frame_2, text = 'Density', variable=v,value = 6, command = density).grid(row = 0, column = 5, sticky = W)
 selectbar_7 = Radiobutton(frame_2, text = 'Weight', variable=v,value = 7, command = doNoting).grid(row = 0, column = 6, sticky = W)
 selectbar_8 = Radiobutton(frame_2, text = 'Power', variable=v,value = 8, command = doNoting).grid(row = 0, column = 7, sticky = W)
 selectbar_9 = Radiobutton(frame_2, text = 'Velocity', variable=v,value = 9, command = doNoting).grid(row = 0, column = 8, sticky = W)
@@ -100,7 +114,7 @@ label_1 = Label(frame_entry, text='Input')
 button = Button(frame_entry, text='Convert', command = run)
 label_2 = Label(frame_entry, text='Result')
 
-entry_1 = Entry(frame_entry, text = 'dd')
+entry_1 = Entry(frame_entry,)
 entry_2 = Entry(frame_entry)
 
 unit_1.grid(row = 1, column = 3)
