@@ -15,7 +15,7 @@ from uc import Units
 
 calc = Units()
 UNIT_TYPE = 'L'
-unitList = list(getattr(calc,UNIT_TYPE).keys())
+unitList = list(getattr(calc,UNIT_TYPE).keys())  # TODO：这里有问题需有检查
 
 def doNoting():
     out = entry_1.get()
@@ -25,28 +25,21 @@ def doNoting():
 
 
 def run():  # TODO: 程序运行主函数，　调用单位转换函数。在窗口输出计算值。
-    out = Units.convert(UNIT_TYPE, entry_1.get(),variable_1.get(), variable_2.get())
+    in_unit = variable_1.get()
+    out_unit = variable_2.get()
+    entry = entry_1.get()
+    print(entry, in_unit, out_unit)     # 测试是否赋值成功？
+    out = Units.convert(UNIT_TYPE, entry,in_unit, out_unit)   # 调用主外部函数计算输出值。
     print(out)
-    entry_2.delete(0,END)
+    entry_2.delete(0,END)   # 刷新输出栏，显示最新计算结果
     entry_2.insert(0,out)
 
 
-
-def length():
-    UNIT_TYPE = 'L'
- #   result = calc.convert(type, unit1, unit2, value)
-
-
-def area():
-    UNIT_TYPE = 'A'
-    variable_1 = StringVar(frame_entry)
-    variable_1.set(unitList[1])  # default value is Lengh Units
-    variable_2 = StringVar(frame_entry)
-    variable_2.set(unitList[2])  # default value
- #   result = calc.convert(type, unit1, unit2, value)
-
-def density():
-    UNIT_TYPE = 'density'
+def freshlist():
+    UNIT_TYPE = variable.get()
+    unitList = getattr(Units,UNIT_TYPE).keys()
+    print (unitList)  #  TODO: 测试是否赋值成功？
+    
 
 # *****   main GUI   ********************************************************************************
 root = Tk()
@@ -79,18 +72,18 @@ toolbar.pack(side=TOP, fill=X)
 # ***********   Category selection**** *****
 # TODO: command has not been set up.
 frame_2 = Frame(root)
-v = IntVar()
-v.set(1)  # initializing the choice, Defult choice is 'Lengh'
-selectbar_1 = Radiobutton(frame_2, text = 'Lengh', variable=v,value = 1, command = length).grid(row = 0, column = 0, sticky = W)
-selectbar_2 = Radiobutton(frame_2, text = 'Area', variable=v,value = 2, command = area).grid(row = 0, column = 1, sticky = W)
-selectbar_3 = Radiobutton(frame_2, text = 'Volumn', variable=v,value = 3, command = doNoting).grid(row = 0, column = 2, sticky = W)
-selectbar_4 = Radiobutton(frame_2, text = 'Pressure', variable=v,value = 4, command = doNoting).grid(row = 0, column = 3, sticky = W)
-selectbar_5 = Radiobutton(frame_2, text = 'Temeprature', variable=v,value = 5, command = doNoting).grid(row = 0, column = 4, sticky = W)
-selectbar_6 = Radiobutton(frame_2, text = 'Density', variable=v,value = 6, command = density).grid(row = 0, column = 5, sticky = W)
-selectbar_7 = Radiobutton(frame_2, text = 'Weight', variable=v,value = 7, command = doNoting).grid(row = 0, column = 6, sticky = W)
-selectbar_8 = Radiobutton(frame_2, text = 'Power', variable=v,value = 8, command = doNoting).grid(row = 0, column = 7, sticky = W)
-selectbar_9 = Radiobutton(frame_2, text = 'Velocity', variable=v,value = 9, command = doNoting).grid(row = 0, column = 8, sticky = W)
-
+v = StringVar()
+v.set('L')  # initializing the choice, Defult choice is 'Lengh'  
+selectbar_1 = Radiobutton(frame_2, text = 'Lengh', variable=v,value = 'L', command = freshlist).grid(row = 0, column = 0, sticky = W)
+selectbar_2 = Radiobutton(frame_2, text = 'Area', variable=v,value = 'A', command = freshlist).grid(row = 0, column = 1, sticky = W)
+selectbar_3 = Radiobutton(frame_2, text = 'Volumn', variable=v,value = 'V', command = freshlist).grid(row = 0, column = 2, sticky = W)
+selectbar_4 = Radiobutton(frame_2, text = 'Pressure', variable=v,value = 'P', command = freshlist).grid(row = 0, column = 3, sticky = W)
+selectbar_5 = Radiobutton(frame_2, text = 'Temeprature', variable=v,value = 'T', command = freshlist).grid(row = 0, column = 4, sticky = W)
+selectbar_6 = Radiobutton(frame_2, text = 'Density', variable=v,value = 'density', command = freshlist).grid(row = 0, column = 5, sticky = W)
+selectbar_7 = Radiobutton(frame_2, text = 'Weight', variable=v,value = 'W', command = freshlist).grid(row = 0, column = 6, sticky = W)
+selectbar_8 = Radiobutton(frame_2, text = 'Power', variable=v,value = 'P', command = freshlist).grid(row = 0, column = 7, sticky = W)
+selectbar_9 = Radiobutton(frame_2, text = 'Velocity', variable=v,value = 'V', command = freshlist).grid(row = 0, column = 8, sticky = W)
+#TODO:  这里可以通过 "for" 合并并赋值。 
 
 frame_2.pack(side=TOP, fill=X)
 
