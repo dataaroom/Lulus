@@ -36,10 +36,18 @@ def run():  # TODO: 程序运行主函数，　调用单位转换函数。在窗
 
 
 def freshlist():
-    UNIT_TYPE = variable.get()
-    unitList = getattr(Units,UNIT_TYPE).keys()
-    print (unitList)  #  TODO: 测试是否赋值成功？
+    variable_1.set('')
+    variable_2.set('')
+    unit_1['Menu'].delete(0,END)  # 删除原有下拉列表。相当于unit_1.keys().delete()
+    unit_2['Menu'].delete(0,END)
     
+    UNIT_TYPE = variable.get()  #  只是字符串
+    calc = Units()
+    unitList = list(getattr(calc,UNIT_TYPE).keys())   # 将字符串转换成对应的单位属性，调取单位列表赋值给unitList.
+    print (unitList)  #  TODO: 测试是否赋值成功？
+    for unit in unitList:
+        unit_1['menu'].add_command(label=unit, command= _setit(variable_1, unit))
+        unit_2['menu'].add_command(label=unit, command= _setit(variable_2, unit))
 
 # *****   main GUI   ********************************************************************************
 root = Tk()
