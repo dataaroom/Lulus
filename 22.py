@@ -1,7 +1,6 @@
 # python3
 
 
-
 def stdconvert(self, value, inputUnit,category)    # # 将输入单位转换成国际标准单位。
     if type == 'T':
         result = Units.convert_t(inputUnit,'K', value)            
