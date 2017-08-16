@@ -9,14 +9,14 @@ class Units:
     
     
     def __init__(self, tag, value, unit, type):
-        self.tag = name
+        self.tag = tag
         self.value = value
         self.unit = unit
         self.type = type
 
 # #单位主列表, 在单位转换时使用。
     def __dir__(self):
-        return ['L', 'M', 'A','V','P','W','Q','v','p','density','t','T']
+        return ['L', 'M', 'A','V','P','W','Q','v','p','density','t','T','mol']
 
 # length
     L = {'m': [1.0, 1],
@@ -124,11 +124,25 @@ class Units:
      '°F': [1.6, 2, 'degree Fahrenheit'],
      'K': [1.0, 1, 'kelvin degree']
      }
+# Amount of substance
+    mol = {'mol': [1.0, 1, 'Mole'],
+           'kmol': [0.001, 1. 'KiloMole']
+          }
+   
+# electric current
+    A = {'A': [1.0, 1, 'ampere'],
+         'mA': [1000.0, 1, 'microampere']
+         'kA': [0.001,1, 'kiloampere']
+        }
+    
+# luminous intensity
+    I = {'cd': [1.0, 1, 'candela'],
+        }
 
 # 单位换算主函数，根据输入的单位，数值　计算要求单位下的值。返回值是浮点数。
     def convert(self, type, inputUnit, output, value):
         if type == 'T':
-            result = Units.convert_t(inputUnit,output, value)
+            result = Units.convert_t(self, inputUnit,output, value)
             return result
         else: 
             in_factor = 1.0
