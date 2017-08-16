@@ -136,7 +136,7 @@ class Units:
         }
     
 # luminous intensity
-    I = {'cd': [1.0, 1, 'candela'],
+    I = {'cd': [1.0, 1, 'candela']
         }
 
 # 单位换算主函数，根据输入的单位，数值　计算要求单位下的值。返回值是浮点数。
