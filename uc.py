@@ -8,12 +8,20 @@ build a class "Units" to convert unit as required.
 class Units:
     
     
-    def __init__(self, tag, value, unit, type):
-        self.tag = tag
+    def __init__(self, value, unit, type):
         self.value = value
         self.unit = unit
         self.type = type
-
+    def __add__(self, other):
+    # 两个相同单位相加，返回值的单位和第一个相同。  比如:  2 in + 2.54 cm = 3 in
+        return Units(standard_unit(self).value + standard_unit(other).value, self.unit, self.type)
+    def __sub__(self, other):
+    #TODO: 两个单位相减，
+    def __mul__(self, other):
+    #TODO: 两个单位相乘， 生成新的单位。遍历Units.dir(), 如果找到新的单位，将其归入已有类别，如果没有找到， 建立一个临时class variable。何时删除？ 待定。。。
+    def __truediv__(slef, other):
+    #TODO: 两个单位相除， 同上
+    
 # #单位主列表, 在单位转换时使用。
     def __dir__(self):
         return ['L', 'M', 'A','V','P','W','Q','v','p','density','t','T','mol']
@@ -182,17 +190,23 @@ class Units:
         else:
             return output
 
-    def standard_unit(self, unit):
-        for i in 
+    def standard_unit(self, input):  # input is a instance of the Unit class.
+ # 将输入转换成标准单位 - SI unit. 
+        for i in  unit.dir():
+            if i == input.type:
+                if n, m in Units.
+                
     
     def WQ_convert(self, input, density, outputUnit) #TODO: 将输入转换成实例，简化程序。
     # 体积流量和质量流量转换公式， in progress..........  不可以引用！！！
         result = unit()
         #TODO: 计算之前先把单位转换成SI 单位。 
+        given = standard_unit(input)
+        den = standard_unit(density)
         
-        if input.type == 'W':
-            result.value = input.value / density.value
+        if given.type == 'W':
+            value = given / density.value
         else:
-            result.value = value * density
+            value = value * density
         return result
 
