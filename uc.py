@@ -182,6 +182,9 @@ class Units:
         else:
             return output
 
+    def standard_unit(self, unit):
+        for i in 
+    
     def WQ_convert(self, input, density, outputUnit) #TODO: 将输入转换成实例，简化程序。
     # 体积流量和质量流量转换公式， in progress..........  不可以引用！！！
         result = unit()
