@@ -6,6 +6,13 @@ build a class "Units" to convert unit as required.
 
 
 class Units:
+    
+    
+    def __init__(self, tag, value, unit, type):
+        self.tag = name
+        self.value = value
+        self.unit = unit
+        self.type = type
 
 # #单位主列表, 在单位转换时使用。
     def __dir__(self):
@@ -138,7 +145,7 @@ class Units:
   
 #　温度单位不成线性比例，公式计算不同，单独设置函数计算。
 # TODO: 以后有时间思考是否可以合并成一个函数。
-    def convert_t(inputUnit, outputUnit, value):
+    def convert_t(self, inputUnit, outputUnit, value):
         output = value
         if inputUnit == '°F' and outputUnit == '°C':
             output = (value - 32) * (5 / 9)
@@ -161,5 +168,14 @@ class Units:
         else:
             return output
 
-
+    def WQ_convert(self, input, density, outputUnit) #TODO: 将输入转换成实例，简化程序。
+    # 体积流量和质量流量转换公式， in progress..........  不可以引用！！！
+        result = unit()
+        #TODO: 计算之前先把单位转换成SI 单位。 
+        
+        if input.type == 'W':
+            result.value = input.value / density.value
+        else:
+            result.value = value * density
+        return result
 
