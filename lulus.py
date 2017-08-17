@@ -1,4 +1,4 @@
-# python3
+# python3.5
 
 from tkinter import *
 from uc import Units
@@ -6,7 +6,6 @@ from uc import Units
 
 def doNoting():
     out = entry_1.get()
-    print(out)
 
 
 def run():  # TODO: 程序运行主函数，　调用单位转换函数。在窗口输出计算值。
@@ -14,10 +13,8 @@ def run():  # TODO: 程序运行主函数，　调用单位转换函数。在窗
     out_unit = variable_2.get()
     UNIT_TYPE = v.get()
     entry = float(entry_1.get())
-    print(UNIT_TYPE, in_unit, out_unit)     # 测试是否赋值成功？ (成功！）
     calc = Units()
     out = calc.convert(UNIT_TYPE, in_unit, out_unit, entry)   # 调用主外部函数计算输出值。
-    print(out)
     entry_2.delete(0,END)   # 刷新输出栏，显示最新计算结果
     entry_2.insert(0,out)
 
@@ -40,14 +37,16 @@ def freshlist():
        list1.add_command(label=unit, command= lambda value=unit: variable_1.set(value)) #TODO: 终于成功了！！！！！！   有时间好好研究一下到底是为什么？！！！
        list2.add_command(label=unit, command= lambda value=unit: variable_2.set(value))
 
+
+# *****   main GUI   ********************************************************************************
+root = Tk()
+root.title('Lulus')
+root.geometry('850x300')
+# ******* The Main menu ********
+
 calc = Units()
 UNIT_TYPE = 'L'
 unitList = list(getattr(calc, UNIT_TYPE).keys())
-# *****   main GUI   ********************************************************************************
-root = Tk()
-root.title('Lulus Process Engineer Aux. 0.0.1')
-root.geometry('850x300')
-# ******* The Main menu ********
 menu = Menu(root)
 root.config(menu=menu)
 submenu = Menu(menu)
@@ -129,7 +128,7 @@ frame_entry.pack()
 
 
 # ******* Status Bar ********
-status = Label(root, text = 'Engineering Units Converter 0.0.0 Beta', bd =1,relief=SUNKEN, anchor=W)
+status = Label(root, text = 'Lulus Process Engineer Aux. 0.0.1 Beta', bd =1,relief=SUNKEN, anchor=W)
 status.pack(side=BOTTOM, fill=X)
 
 
