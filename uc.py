@@ -6,14 +6,24 @@ build a class "Units" to convert unit as required.
 
 
 class Units:
+    '''
+类属性保存所有单位，和单位间的转换系数。megic method 用来定义 +-*/， 建立函数进行相应的单位转换计算。   
+
+    '''
     
     
-    def __init__(self, value, unit, type):
-        self.value = value
+    def __init__(self, value = None, unit = None, type = None):    # 默认格式：(0.0, 'm', 'L')  TODO: 考虑是否将 type 设置成必要参数, 也许这样程序更明确。  
+        if value = None:
+            value = 0.0
+        if type = None:
+            type = 'L'
+        if unit = None:
+            unit = 'm'
+        self.value = value        
         self.unit = unit
         self.type = type
 
-# 两个相同单位相加，返回值的单位和第一个相同。  比如:  2 in + 2.54 cm = 3 in
+# 两个相同单位相加，返回值的单位和第一个相同。  比如:  2 in + 2.54 cm = 3 in  
     def __add__(self, other):
         sum = self.value + Units.convert(other, self.unit)
         result = Units(sum, self.unit, self.type)
@@ -25,7 +35,7 @@ class Units:
         result = Units(sub, self.unit, self.type)
         return result
 
-# 两个单位相乘， 生成新的单位。遍历dir(Units), 如果找到新的单位，将其归入已有类别，如果没有找到， 建立一个临时type "intern" TODO: 何时删除？ 待定。。。
+# 两个单位相乘， 生成新的单位。遍历dir(Units), 如果找到新的单位，将其归入已有类别，如果没有找到， 建立一个临时type "intern" TODO: 如何实现  2 * 3 m = 6 m? and 3 m * 3 m = 9 m2 待定。。。
     def __mul__(self, other):
         mul = self.value * Units.convert(other, self.unit)
         unit = self.unit + '*' + other.unit
@@ -54,7 +64,20 @@ class Units:
     def __dir__(self):
         return ['L', 'M', 'A','V','P','W','Q','v','p','density','t','T','mol']
 
-
+    @property
+    
+# Convert the unit to SI unit. and the SI unit is considered as an instance attribute and "ready only".
+    def SI_unit(self):
+        for i, j in getattr(self,self.type).items():
+            if j[0] == 1.0:
+                SIunit = i
+            if self.unit == i:
+                in_factor = j[0]
+        value = self.value / in_factor
+        output = Units(value, SIunit, self.type)
+        return output
+        
+        
 # length
     L = {'m': [1.0, 1],
      'km': [1e-3, 1],
@@ -176,58 +199,42 @@ class Units:
     I = {'cd': [1.0, 1, 'candela']
         }
 
-# 单位换算主函数，根据输入的单位，数值　计算要求单位下的值。返回值是浮点数。
-    def convert(known, outUnit):
-        if known.type == 'T':
-            return Units.convert_t(known, outUnit)
+# 单位换算主函数，根据输入的单位，数值　计算要求单位下的值。Return is an instance of Units class.
+    def convert(self, outUnit):
+        if self.type == 'T':
+            return self.convert_t(outUnit)
         else:
             in_factor = 1.0
             out_factor = 1.0
-            catg = getattr(known, known.type).items()
+            catg = getattr(self, self.type).items()
             for i,j in catg:  #  调取用户所选的单位参数表，搜索输入和输出，并进行计算。返回计算结果。
-                if known.unit == i:
+                if self.unit == i:
                     in_factor = j[0]
                 if outUnit == i:
                     out_factor = j[0]
-            result = known.value * out_factor / in_factor
+            result = Units(self.value * out_factor / in_factor, outUnit, self.type) 
             return result
 
 # 温度转换公式。 温度单位不成线性比例，公式计算不同，单独设置函数计算。TODO: 以后有时间思考是否可以合并成一个函数。
-    def convert_t(known, outputUnit):
-        if known.unit == '°F' and outputUnit == '°C':
-            output = (known.value - 32) * (5 / 9)
-            return output
-        elif known.unit == '°C' and outputUnit == '°F':
-            output = (known.value * 1.8) + 32
-            return output
-        elif known.unit == '°C' and outputUnit == 'K':
-            output = known.value + 273.15
-            return (output)
-        elif known.unit == 'K' and outputUnit == '°C':
-            output = known.value - 273.15
-            return output
-        elif known.unit == '°F' and outputUnit == 'K':
-            output = (known.value + 459.67) * (5 / 9)
-            return output
-        elif known.unit == 'K' and outputUnit == '°F':
-            output = (known.value * 1.8) - 459.67
-            return output
+    def convert_t(self, outputUnit):
+        if self.unit == '°F' and outputUnit == '°C':
+            output = (self.value - 32) * (5 / 9)
+        elif self.unit == '°C' and outputUnit == '°F':
+            output = (self.value * 1.8) + 32
+        elif self.unit == '°C' and outputUnit == 'K':
+            output = self.value + 273.15
+        elif self.unit == 'K' and outputUnit == '°C':
+            output = self.value - 273.15
+        elif self.unit == '°F' and outputUnit == 'K':
+            output = (self.value + 459.67) * (5 / 9)
+        elif self.unit == 'K' and outputUnit == '°F':
+            output = (self.value * 1.8) - 459.67
         else:
-            return known.value
-
-# 将输入转换成标准单位 - SI unit.
-    def standard_unit(known):  # input is a instance of the Unit class.
-        for i, j in getattr(known,known.type).items():
-            if j[0] == 1.0:
-                SIunit = i
-            if known.unit == i:
-                in_factor = j[0]
-
-        value = known.value / in_factor
-        output = Units(value, SIunit, known.type)
-        return output
-
-
+            output = self.value
+        result = Units(output, outputUnit, 'T')
+        return result
+    
+            
 unit= Units(2,'m', 'L')
 unit1 = Units(2.54,'in', 'L')
 unit3 = Units(22, 'cm', 'L')
