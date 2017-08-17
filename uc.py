@@ -23,6 +23,24 @@ class Units:
         self.unit = unit
         self.type = type
 
+    @property 
+# Convert the unit to SI unit and return the SI value. And the SI unit is considered as an instance attribute and "ready only".    
+    def SI_value(self):
+        for i, j in getattr(self,self.type).items():
+            if j[0] == 1.0:  
+                SIunit = i  
+            if self.unit == i:  
+                in_factor = j[0] 
+        value = self.value / in_factor       
+        return value
+        
+# Loop the units.items() and return the SI unit. SI unit is considered as an instance attribute and "ready only".        
+    def SI_unit(self):
+        for i, j in getattr(self,self.type.=).items():   
+            if j[0] == 1.0:     
+                SIunit = i    
+        return SIunit   
+        
 # 两个相同单位相加，返回值的单位和第一个相同。  比如:  2 in + 2.54 cm = 3 in  
     def __add__(self, other):
         sum = self.value + Units.convert(other, self.unit)
@@ -63,20 +81,7 @@ class Units:
 #单位主列表, 在单位转换时使用。
     def __dir__(self):
         return ['L', 'M', 'A','V','P','W','Q','v','p','density','t','T','mol']
-
-    @property
-    
-# Convert the unit to SI unit. and the SI unit is considered as an instance attribute and "ready only".
-    def SI_unit(self):
-        for i, j in getattr(self,self.type).items():
-            if j[0] == 1.0:
-                SIunit = i
-            if self.unit == i:
-                in_factor = j[0]
-        value = self.value / in_factor
-        output = Units(value, SIunit, self.type)
-        return output
-        
+     
         
 # length
     L = {'m': [1.0, 1],
@@ -202,7 +207,7 @@ class Units:
 # 单位换算主函数，根据输入的单位，数值　计算要求单位下的值。Return is an instance of Units class.
     def convert(self, outUnit):
         if self.type == 'T':
-            return self.convert_t(outUnit)
+            return self._convert_T(outUnit)
         else:
             in_factor = 1.0
             out_factor = 1.0
@@ -215,8 +220,8 @@ class Units:
             result = Units(self.value * out_factor / in_factor, outUnit, self.type) 
             return result
 
-# 温度转换公式。 温度单位不成线性比例，公式计算不同，单独设置函数计算。TODO: 以后有时间思考是否可以合并成一个函数。
-    def convert_t(self, outputUnit):
+# 温度转换公式 private method, It is not recommended to use it from external. 温度单位不成线性比例，公式计算不同，单独设置函数计算。TODO: 以后有时间思考是否可以合并成一个函数。
+    def _convert_T(self, outputUnit):
         if self.unit == '°F' and outputUnit == '°C':
             output = (self.value - 32) * (5 / 9)
         elif self.unit == '°C' and outputUnit == '°F':
