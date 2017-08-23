@@ -12,50 +12,54 @@ class Units:
     '''
     
     
-    def __init__(self, value = None, unit = None, type = None):    # 默认格式：(0.0, 'm', 'L')  TODO: 考虑是否将 type 设置成必要参数, 也许这样程序更明确。  
-        if value = None:
+    def __init__(self, value = None, unit = None, type = None):    # 默认格式：(0.0, 'm', 'L') 参数均可选。 TODO: 考虑是否将 type 设置成必要参数, 也许这样程序更明确。 
+        if value == None:
             value = 0.0
-        if type = None:
-            type = 'L'
-        if unit = None:
+        if unit == None:
             unit = 'm'
-        self.value = value        
+        if type == None:
+            type = 'L'
+
+        self.value = value
         self.unit = unit
         self.type = type
 
-    @property 
-# Convert the unit to SI unit and return the SI value. And the SI unit is considered as an instance attribute and "ready only".    
+# Convert the unit to SI unit and return the SI value. And the SI unit is considered as an instance attribute and "ready only".   (Verifed)
+    @property
     def SI_value(self):
-        for i, j in getattr(self,self.type).items():
-            if j[0] == 1.0:  
-                SIunit = i  
-            if self.unit == i:  
-                in_factor = j[0] 
-        value = self.value / in_factor       
-        return value
-        
-# Loop the units.items() and return the SI unit. SI unit is considered as an instance attribute and "ready only".        
+        if self.type == 'T':
+            result = Units._convert_T(self, 'K')
+            return result
+        else:
+            for i, j in getattr(self,self.type).items():
+                if self.unit == i:
+                    in_factor = j[0]
+            value = self.value / in_factor
+            return value
+
+# Convert the unit to SI unit and return the SI unit. SI unit is considered as an instance attribute and "ready only".  (verifed)
+    @property
     def SI_unit(self):
-        for i, j in getattr(self,self.type.=).items():   
-            if j[0] == 1.0:     
-                SIunit = i    
-        return SIunit   
-        
+        for i, j in getattr(self,self.type).items():
+            if j[0] == 1.0:
+                std = i
+        return std
+
 # 两个相同单位相加，返回值的单位和第一个相同。  比如:  2 in + 2.54 cm = 3 in  
     def __add__(self, other):
-        sum = self.value + Units.convert(other, self.unit)
+        sum = self.value + Units.convert(other, self.unit).value
         result = Units(sum, self.unit, self.type)
         return result
 
 # 两个单位相减，返回值的单位和第一个相同。  比如:  22 in - 2.54 cm = 21 in
     def __sub__(self, other):
-        sub = self.value - Units.convert(other, self.unit)
+        sub = self.value - Units.convert(other, self.unit).value
         result = Units(sub, self.unit, self.type)
         return result
 
 # 两个单位相乘， 生成新的单位。遍历dir(Units), 如果找到新的单位，将其归入已有类别，如果没有找到， 建立一个临时type "intern" TODO: 如何实现  2 * 3 m = 6 m? and 3 m * 3 m = 9 m2 待定。。。
     def __mul__(self, other):
-        mul = self.value * Units.convert(other, self.unit)
+        mul = self.value * Units.convert(other, self.unit).value
         unit = self.unit + '*' + other.unit
         type = 'intern'
         for i in dir(self):
@@ -67,7 +71,7 @@ class Units:
 
 # 两个单位相除， 生成新的单位。遍历dir(Units), 如果找到新的单位，将其归入已有类别，如果没有找到， 建立一个临时type "intern" TODO: 何时删除？ 待定。。。
     def __truediv__(self, other):
-        mul = self.value / Units.convert(other, self.unit)
+        mul = self.value / Units.convert(other, self.unit).value
         unit = self.unit + '/' + other.unit
         type = 'intern'
         for i in dir(self):
@@ -185,7 +189,7 @@ class Units:
      }
 
 # temperature
-    T = {'°C': [1.0, 1, 'degree Centigrade'],
+    T = {'°C': [1.1, 1, 'degree Centigrade'],
      '°F': [1.6, 2, 'degree Fahrenheit'],
      'K': [1.0, 1, 'Kelvin degree']
      }
@@ -240,13 +244,13 @@ class Units:
         return result
     
             
-unit= Units(2,'m', 'L')
-unit1 = Units(2.54,'in', 'L')
-unit3 = Units(22, 'cm', 'L')
+unit= Units(2,'°C', 'T')
+unit1 = Units(2.54,'°F', 'T')
+unit3 = Units(22, 'K', 'T')
 print(unit.type)
 print(unit.unit)
-print(len(dir(unit)))
-print(list(getattr(unit, unit.type).items()))
-unit2 = unit1 - unit + unit3
-print(unit2.value, unit2.unit, unit2.type)
+print(unit3.SI_unit)
 
+#print(list(getattr(unit, unit.type).items()))
+unit2 = unit1 - unit
+print(unit2.value, unit2.unit, unit2.type)

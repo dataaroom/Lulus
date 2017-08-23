@@ -1,6 +1,6 @@
 # python3
 
-
+'''
 def stdconvert(self, value, inputUnit,category)    # # 将输入单位转换成国际标准单位。
     if type == 'T':
         result = Units.convert_t(inputUnit,'K', value)            
@@ -15,3 +15,15 @@ def stdconvert(self, value, inputUnit,category)    # # 将输入单位转换成�
                 in_factor = j[0]       
         result = value * out_factor / in_factor            
         return result
+'''
+
+class SymbolDict():
+  def __init__(self, stream):
+    for key in stream:
+        setattr(self, key, stream[key])
+
+a = {'f00': 1, 'df':22}
+
+x = SymbolDict(a)
+
+print (x.df)

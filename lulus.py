@@ -13,8 +13,8 @@ def run():  # TODO: 程序运行主函数，　调用单位转换函数。在窗
     out_unit = variable_2.get()
     UNIT_TYPE = v.get()
     entry = float(entry_1.get())
-    calc = Units()
-    out = calc.convert(UNIT_TYPE, in_unit, out_unit, entry)   # 调用主外部函数计算输出值。
+    calc = Units(entry, in_unit, UNIT_TYPE)
+    out = calc.convert(out_unit).value   # 调用主外部函数计算输出值。
     entry_2.delete(0,END)   # 刷新输出栏，显示最新计算结果
     entry_2.insert(0,out)
 
@@ -32,7 +32,6 @@ def freshlist():
     unitList = list(getattr(calc,UNIT_TYPE).keys())
 
     # 将字符串转换成对应的单位属性，调取单位列表赋值给unitList.
-
     for unit in unitList:
        list1.add_command(label=unit, command= lambda value=unit: variable_1.set(value)) #TODO: 终于成功了！！！！！！   有时间好好研究一下到底是为什么？！！！
        list2.add_command(label=unit, command= lambda value=unit: variable_2.set(value))
