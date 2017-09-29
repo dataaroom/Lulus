@@ -1,9 +1,0 @@
-#! python3
-"""
-Create a data structure for streams.
-
-"""
-
-class streams:   
-
-'''
