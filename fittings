@@ -1,0 +1,12 @@
+#! python3
+
+"""
+Create a data structure for all type of fittings.
+
+"""
+
+import Units from uc
+
+class Elbow:
+    def __init__(self,
+    
