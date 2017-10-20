@@ -1,0 +1,12 @@
+
+import Units from uc
+
+class Lines:
+  def __init__(self, 
+      Fluid_Code = '', 
+      Unit = '', 
+      Number = '000', 
+      Pipe_Spec = '', 
+      Insulation_Code = '', 
+      Insulation_thick = Units(),
+      
