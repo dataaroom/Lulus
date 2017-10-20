@@ -6,7 +6,7 @@ Create a data structure for streams.
 from uc import Units
 
 
-class streams:   
+class Streams:   
 
 """
 Define a data structure for flow streams. define all pareteters with a proper unit. 
@@ -21,7 +21,7 @@ Define a data structure for flow streams. define all pareteters with a proper un
                Temperature = Units(), 
                Pressure = Units(), 
                Mass_Density = Units(), 
-               MW = 0, 
+               MW = 0.0, 
                Enthalpy = Units(), 
                Heat_Flow = Units(), 
                Critial_Temperature = Units(), 
