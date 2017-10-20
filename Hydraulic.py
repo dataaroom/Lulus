@@ -13,7 +13,9 @@ import Fittings form fittings
 import Lines from lines
 import Instruments from instrumentation
 
-
+class Section:
+    def __init__ (self, pressure, temperature, stream, Elevation, Mass_Flow, size, 
+                 ):
     
     
   
