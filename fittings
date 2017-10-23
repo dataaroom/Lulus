@@ -21,6 +21,25 @@ class Pipe(Fittings):
         self.schedule = schedule
         self.length = length
         
+    @property
+    def ID(self):
+        pass
+    
+    def OD(self):
+        pass
+    
+    def thinkness(self):
+        pass
+    
+    def volume(self):
+        pass
+    
+    def weight(self):
+        pass
+    
+    def fractionloss(self):
+        
+        
     
     
 class Elbow(Fittings):
