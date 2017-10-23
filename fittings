@@ -6,13 +6,23 @@ Create a data structure for all type of fittings.
 """
 
 import Units from uc
+import Line from lines
 
 class Fittings:
     def __init__(self, class, size):
         self.class = class
         self.size = size
 
+class Pipe(Fittings):
+    
+    def __init__ (self, line, size = Units('L',2), schedule = 'std', length = Units('L', 10)): #TODO create a class or dictionary for piping class.
+        self.line = line
+        self.size = size
+        self.schedule = schedule
+        self.length = length
         
+    
+    
 class Elbow(Fittings):
   
 
@@ -22,7 +32,7 @@ class Tee(Fittings):
 class Valve(Fittings):
     
 
-class Pipe(Fittings):
+
     
 
 class Reducer(Fittings):
