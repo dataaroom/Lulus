@@ -12,14 +12,7 @@ class Units:
     '''
     
     
-    def __init__(self, value = None, unit = None, type = None):    # 默认格式：(0.0, 'm', 'L') 参数均可选。 TODO: 考虑是否将 type 设置成必要参数, 也许这样程序更明确。 
-        if value == None:
-            value = 0.0
-        if unit == None:
-            unit = 'm'
-        if type == None:
-            type = 'L'
-
+    def __init__(self, value = 0.0, unit = 'm', type = 'L'):    # 默认格式：(0.0, 'm', 'L') 参数均可选。 TODO: 考虑是否将 type 设置成必要参数, 也许这样程序更明确。 
         self.value = value
         self.unit = unit
         self.type = type
@@ -184,13 +177,13 @@ class Units:
     E = {'j': [1.0, 1, 'joule'],
          'w.s': [1.0, 1, 'watt.second'],
          'cal': [0.23846, 2, 'calorie [I.T]'],
-         'BTU': [9.47817e-4, 2, 'British Thermal Units'],
-         'MMBTU': [9.47817e-10, 2, 'Million British Thermal Units'],
-         'kj': [1000, 1, 'kilojoule'],
-         'Cal': [0.00023846, 2, 'Kilocalorie [I.T]'],
-         
-         
-        
+         'BTU': [9.47817e-4, 2, 'British Thermal Units'],
+         'MMBTU': [9.47817e-10, 2, 'Million British Thermal Units'],
+         'kj': [1000, 1, 'Kilojoule'],
+         'Cal': [0.00023846, 2, 'Kilocalorie [I.T]']
+         }
+
+
 # power
     P = {'kw': [1.0, 1, 'Kilowatt'],
      'w': [1000, 1],
@@ -199,10 +192,10 @@ class Units:
 
 # density
     density = {'kg/m3': [1.0, 1],
-           'g/mm3': [1e-6, 1],
-           'water(4°C)': [0.001, 1],
-          'lbs/gallon':[0.008345404, 2]
-           }
+               'g/mm3': [1e-6, 1],
+               'water(4°C)': [0.001, 1],
+               'lbs/gallon':[0.008345404, 2]
+               }
 
 # time
     t = {'s': [1.0, 1, 'Seconds'],
@@ -266,14 +259,15 @@ class Units:
         result = Units(output, outputUnit, 'T')
         return result
     
-            
-unit= Units(2,'°C', 'T')
-unit1 = Units(2.54,'°F', 'T')
-unit3 = Units(22, 'K', 'T')
-print(unit.type)
-print(unit.unit)
-print(unit3.SI_unit)
+
+if __name__== "__main__":
+    unit= Units(2,'°C', 'T')
+    unit1 = Units(2.54,'°F', 'T')
+    unit3 = Units(22, 'K', 'T')
+    print(unit.type)
+    print(unit.unit)
+    print(unit3.SI_unit)
 
 #print(list(getattr(unit, unit.type).items()))
-unit2 = unit1 - unit
-print(unit2.value, unit2.unit, unit2.type)
+    unit2 = unit1 - unit
+    print(unit2.value, unit2.unit, unit2.type)
