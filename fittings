@@ -8,7 +8,7 @@ Create a data structure for all type of fittings.
 from uc import Units
 # from lines import Line
 
-class Fittings:
+class Fittings:  #TODO: 考虑是否应该删除 Fitting class。
     def __init__(self, spec, size):
         self.spec = spec
         self.size = size
