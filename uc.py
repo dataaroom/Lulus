@@ -88,7 +88,7 @@ class Units:
      
         
 # length
-    L = {'m': [1.0, 1],
+    L = {'m': [1.0, 1],   # For second parameter, 1 means SI unit, 2 means english Unit, 3 means UK unit.
      'km': [1e-3, 1],
      'cm': [100, 1],
      'mm': [1e3, 1],
@@ -147,10 +147,15 @@ class Units:
     W = {'kg/s': [1.0, 1],
      'kg/m': [60, 1],
      'kg/hr': [3600, 1],
-     'lbs/s': [2.20462262, 1],
+     'lbs/s': [2.20462262, 2],
      'lbs/hr': [7936.641432, 2],
      'ton/day': [216, 1]
      }
+# mole_flow_rate
+    MF = {'kgmol/s': [1.0,1],
+          'kgmol/hr': [3600.0, 1],
+          'lbmol/hr': [7937.0, 2]
+         }
 
 # volume flow rate
     Q = {'m3/s': [1.0, 1],
@@ -159,8 +164,14 @@ class Units:
      'liter/s': [1000, 1],
      'gpm': [15850.32314,2,'gallon per minutes']
      }
+    
+# heat flow rate
+    HF = {'j/s': [1.0, 1, 'joule per second'],
+          'MMBTU/hr': [3.412e6, 2, 'Million British thermal Units per hour'],
+          'kj/hr': [3.6, 1, 'kilojoule per hour']
+         }
 
-     # velocity
+# velocity
     v = {'m/s': [1.0, 1, 'Meter per Second'],
      'km/hr': [3.6, 1],
      'ft/s': [3.280839895, 2],
@@ -168,6 +179,18 @@ class Units:
      'in/s': [39.37007874, 2],
      'knot': [1.943844493, 2]
      }
+        
+# energy
+    E = {'j': [1.0, 1, 'joule'],
+         'w.s': [1.0, 1, 'watt.second'],
+         'cal': [0.23846, 2, 'calorie [I.T]'],
+         'BTU': [9.47817e-4, 2, 'British Thermal Units'],
+         'MMBTU': [9.47817e-10, 2, 'Million British Thermal Units'],
+         'kj': [1000, 1, 'kilojoule'],
+         'Cal': [0.00023846, 2, 'Kilocalorie [I.T]'],
+         
+         
+        
 # power
     P = {'kw': [1.0, 1, 'Kilowatt'],
      'w': [1000, 1],
