@@ -3,6 +3,7 @@
 """
 Create a data structure for all type of fittings.
 
+
 """
 
 from uc import Units
