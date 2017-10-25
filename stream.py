@@ -1,38 +1,37 @@
 #! python3
-"""
-Create a data structure for streams.
+'''
 
-"""
+
+'''
+
+
+
 from uc import Units
 
-
+# Define a data structure for flow streams. define all pareteters with a proper unit.
 class Streams:   
 
-"""
-Define a data structure for flow streams. define all pareteters with a proper unit. 
-"""
-
-  def __init__(self, stream, 
-               Description = "Please add a description, like 'Feed Gas to HP Chiller'." 
-               Phase = 'Vapor', 
-               Fraction_V = 1.0, 
-               Mole_Flow = Units(), 
-               Mass_Flow = Units(), 
-               Temperature = Units(), 
-               Pressure = Units(), 
-               Mass_Density = Units(), 
-               MW = 0.0, 
-               Enthalpy = Units(), 
-               Heat_Flow = Units(), 
-               Critial_Temperature = Units(), 
-               Critical_Pressure = Units(), 
-               Mass_Flow_L = Units(), 
+  def __init__(self, stream,
+               Description = "Please add a description, like 'Feed Gas to HP Chiller'.",
+               Phase = 'Vapor',
+               Fraction_V = 1.0,
+               Mole_Flow = Units(),
+               Mass_Flow = Units(),
+               Temperature = Units(),
+               Pressure = Units(),
+               Mass_Density = Units(),
+               MW = 0.0,
+               Enthalpy = Units(),
+               Heat_Flow = Units(),
+               Critial_Temperature = Units(),
+               Critical_Pressure = Units(),
+               Mass_Flow_L = Units(),
                Mole_Flow_L = Units(),
-               A_Liquid_Flow = Units(), 
-               Specific_Gravity = 0.0, 
-               MW_L = 0.0
-               Density_L = Units(), 
-               Enthalpy_L = Units(), 
+               A_Liquid_Flow = Units(),
+               Specific_Gravity = 0.0,
+               MW_L = 0.0,
+               Density_L = Units(),
+               Enthalpy_L = Units(),
                Mass_Heat_Capacity_L = Units(),
                Surface_Tension = Units(),
                Thermal_Conductivity_L = Units(),
@@ -40,13 +39,13 @@ Define a data structure for flow streams. define all pareteters with a proper un
                Mass_Flow_V = Units(),
                Mole_Flow_V = Units(),
                Std_Vapor_Flow = Units(),
-               MW_V = 0.0
+               MW_V = 0.0,
                Density_V = Units(),
                Enthalpy_V = Units(),
                Mass_Heat_Capacity_V = Units(),
                Thermal_Conductivity_V = Units(),
                Viscosity_V = Units(),
-               cp_cv = 1.0               
+               cp_cv = 1.0
               ):
       self.stream = stream
       self.Description = Description

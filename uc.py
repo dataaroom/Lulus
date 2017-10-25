@@ -24,6 +24,7 @@ class Units:
             result = Units._convert_T(self, 'K')
             return result
         else:
+            in_factor = 1.0
             for i, j in getattr(self,self.type).items():
                 if self.unit == i:
                     in_factor = j[0]
@@ -269,5 +270,6 @@ if __name__== "__main__":
     print(unit3.SI_unit)
 
 #print(list(getattr(unit, unit.type).items()))
-    unit2 = unit1 - unit
-    print(unit2.value, unit2.unit, unit2.type)
+    unit = Units(2, 'm2', 'A')
+
+    print(unit.SI_value)
