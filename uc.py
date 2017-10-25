@@ -21,7 +21,7 @@ class Units:
     @property
     def SI_value(self):
         if self.type == 'T':
-            result = Units._convert_T(self, 'K')
+            result = Units._convert_T(self, 'K').value
             return result
         else:
             in_factor = 1.0
@@ -51,30 +51,15 @@ class Units:
         result = Units(sub, self.unit, self.type)
         return result
 
-# 两个单位相乘， 生成新的单位。遍历dir(Units), 如果找到新的单位，将其归入已有类别，如果没有找到， 建立一个临时type "intern" TODO: 如何实现  2 * 3 m = 6 m? and 3 m * 3 m = 9 m2 待定。。。
+# 一个量纲常数乘以一个无量纲数， 没有单位变化。 TODO: 两个单位相除，遍历已有单位，赋值新的单位。
     def __mul__(self, other):
-        mul = self.value * Units.convert(other, self.unit).value
-        unit = self.unit + '*' + other.unit
-        type = 'intern'
-        for i in dir(self):
-            for a, b in getattr(self,i).items():
-                if unit == a:
-                    type = i
-                    break
-        result = Units(mul, unit, type)
+        mul = self.value * other
+        return Units(mul, self.unit, self.type)
 
-# 两个单位相除， 生成新的单位。遍历dir(Units), 如果找到新的单位，将其归入已有类别，如果没有找到， 建立一个临时type "intern" TODO: 何时删除？ 待定。。。
+# 一个量纲常数除以一个无量纲数， 没有单位变化。 TODO: 两个单位相除，遍历已有单位，赋值新的单位。
     def __truediv__(self, other):
-        mul = self.value / Units.convert(other, self.unit).value
-        unit = self.unit + '/' + other.unit
-        type = 'intern'
-        for i in dir(self):
-            for a, b in getattr(self,i).items():
-                if unit == a:
-                    type = i
-                    break
-        result = Units(mul, unit, type)
-        return result
+        mul = self.value / other
+        return Units(mul, self.unit, self.type)
 
 #单位主列表, 在单位转换时使用。
     def __dir__(self):
@@ -151,7 +136,7 @@ class Units:
           'lbmol/hr': [7937.0, 2]
          }
 
-# volume flow rate
+# Volume flow rate
     Q = {'m3/s': [1.0, 1],
      'm3/min': [60, 1],
      'm3/hr': [3600, 1],
@@ -159,7 +144,7 @@ class Units:
      'gpm': [15850.32314,2,'gallon per minutes']
      }
     
-# heat flow rate
+# Heat Flow Rate
     HF = {'j/s': [1.0, 1, 'joule per second'],
           'MMBTU/hr': [3.412e6, 2, 'Million British thermal Units per hour'],
           'kj/hr': [3.6, 1, 'kilojoule per hour']
@@ -211,8 +196,8 @@ class Units:
      'K': [1.0, 1, 'Kelvin degree']
      }
 # Amount of substance
-    mol = {'mol': [1.0, 1, 'Mole'],
-           'kmol': [0.001, 1, 'KiloMole']
+    mol = {'kmol': [1.0, 1, 'KiloMole'],
+           'mol': [1000, 1, 'Mole']
           }
    
 # electric current
@@ -262,14 +247,10 @@ class Units:
     
 
 if __name__== "__main__":
-    unit= Units(2,'°C', 'T')
-    unit1 = Units(2.54,'°F', 'T')
-    unit3 = Units(22, 'K', 'T')
-    print(unit.type)
-    print(unit.unit)
-    print(unit3.SI_unit)
+    unit1= Units(2,'°C', 'T')
 
-#print(list(getattr(unit, unit.type).items()))
-    unit = Units(2, 'm2', 'A')
+    unit2 = unit1 / 2
 
-    print(unit.SI_value)
+
+    print(unit1.SI_value)
+    print(unit2.value)

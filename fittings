@@ -6,6 +6,8 @@ Create a data structure for all type of fittings.
 """
 
 from uc import Units
+import math
+
 # from lines import Line
 
 class Fittings:  #TODO: 考虑是否应该删除 Fitting class。
@@ -15,29 +17,32 @@ class Fittings:  #TODO: 考虑是否应该删除 Fitting class。
 
 class Pipe(Fittings):
     
-    def __init__ (self, number, size = Units(2, 'in', 'L'), schedule = 'STD', length = Units(10, 'ft', 'L')): #TODO create a class or dictionary for piping class.
+    def __init__ (self, number, size = Units(2, 'in', 'L'), schedule = 'STD', length = Units(0, 'ft', 'L')): #TODO create a class or dictionary for piping class.
         self.number = number  # line number
         self.size = size  # line size, English Unit  TODO: Add SI unit.
         self.schedule = schedule # Pipe schedule
         self.length = length  # Pipe length
-        
-    @property
-    def ID(self):
-        size = self.size.convert('in').value
-        return float(self.pipeid[size][self.schedule])   # The return is a value, not a unit.
 
+# Find the pipe's inner diameter. The return is a unit not a value.
     @property
-    def OD(self):
-        size = self.size.convert('in').value
-        return float(self.pipeid[size]['OD'])            # The return is a value, not a unit.
+    def iD(self):
+        return Units(self.innerdiameter[self.size.value][self.schedule], 'in')      # The return is a value, not a unit.
 
+# Find the pipe's outter diameter. The return is a unit not a value.
     @property
-    def wt(self): # Pipe Wall Thinkness
-        return (self.OD - self.ID) / 2  # TODO: 返回的应该是一个单位， 而不是 一个值。
+    def oD(self):
 
+        return Units(self.innerdiameter[self.size.value]['OD'], 'in')      # The return is a value, not a unit.
+
+    # Pipe Wall Thinkness
+    @property
+    def wt(self):
+        return (self.oD - self.iD) / 2  # TODO: 返回的应该是一个单位， 而不是 一个值。
+
+    # Pipe valume based on inner
     @property
     def volume(self):
-        pass
+        return Units(math.pi * self.length.SI_value * (self.iD.SI_value / 2) ** 2, 'm3', 'V')
 
     @property
     def weight(self):
@@ -48,8 +53,8 @@ class Pipe(Fittings):
         pass
 
 
-    #Pipe Schedules are based on ASME standards B36.10M and B36.19M
-    pipeid = {0.125: {'OD': 0.405,
+    #Pipe Schedules are based on ASME standards B36.10M and B36.19M.
+    innerdiameter = {0.125: {'OD': 0.405,
                   '10S': 0.307,
                   '40S': 0.269,
                   '80S': 0.215,
@@ -421,7 +426,14 @@ class Pipe(Fittings):
                 'XS': 119},
     }
     
-    
+
+class Entrance:
+    def __init__(self, line, size, angle = 0):
+        self.size = size
+        self.
+    return 0.57
+
+
 class Elbow(Fittings):
     pass
   
@@ -434,8 +446,7 @@ class Valve(Fittings):
 class Reducer(Fittings):
     pass
     
-class Entrance(Fittings):
-    pass
+
     
 class Exit(Fittings):
     pass
@@ -449,13 +460,13 @@ class Other(Fittings):
 
 if __name__== "__main__":
 
-    size = Units(4, 'in')
+    size = Units(6, 'in')
     piping = Pipe('sdf')
-    piping2 = Pipe('fsfdf')
-    piping2.size = size
-    print(piping.number, piping.ID)
-    print(piping2.number, piping2.ID)
-    print(piping.thinkness)
+    piping2 = Pipe('fsfdf', size)
+#    piping2.size = size
+    print(piping.number, piping.iD.value)
+    print(piping2.number, piping2.iD.value)
+    print(piping.wt.value)
 
 
     
